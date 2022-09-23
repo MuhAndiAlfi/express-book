@@ -1,0 +1,181 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "express-book",
+        "description": "Back End Test",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+
+    "paths": {
+        "/books": {
+            "get": {
+                "tags": ["Books"],
+                "summary": "Get all books ",
+                "schema": {
+                    "$ref": "#/definitions/Book"
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Books"
+                        }
+                    }
+                }
+            }
+        },
+        "/members": {
+            "get": {
+                "tags": ["Member"],
+                "summary": "Get all members",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Members"
+                        }
+                    }
+                }
+            }
+        },
+        "/history": {
+            "post": {
+                "tags": ["History"],
+                "summary": "History member who borrow books",
+                "schema": {
+                    "$ref": "#/definitions/Historys"
+                },
+                "parameters": [
+                    {
+                        "name": "history",
+                        "in": "body",
+                        "description": "new trasaction",
+                        "schema": {
+                            "$ref": "#/definitions/History"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "transaction success",
+                        "schema": {
+                            "$ref": "#/definitions/Historys"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Book": {
+            "required": [
+                "code", "title", "author", "stock"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "stock": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Books": {
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "stock": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Member": {
+            "required": [
+                "_id", "code", "name"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Members": {
+            "type": "array",
+            "$ref": "#/definitions/Member"
+        },
+        "History": {
+            "required": [
+                "bookCode", "memberCode", "expire"
+            ],
+            "properties": {
+                "bookCode": {
+                    "type": "array",
+                    "items": {}
+                },
+                "memberCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "Historys": {
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "books": {
+                    "type": "array",
+                    "items":{
+                        "type": "object"
+                    }
+                },
+                "member": {
+                    "type": "array",
+                    "items":{
+                        "type": "object"
+                    }
+                },
+                "borrow": {
+                    "type": "string"
+                },
+                "return": {
+                    "type": "string"
+                },
+                "expire": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
